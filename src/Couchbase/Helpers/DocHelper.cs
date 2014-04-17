@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,8 @@ namespace Couchbase.Helpers
     {
         public static string InsertId(string json, string id)
         {
-            if (!json.Contains("\"id\""))
+            dynamic obj = JsonConvert.DeserializeObject(json);
+            if (obj.Id == null)
             {
                 return json.Insert(1, string.Concat("\"id\":", "\"", id, "\","));
             }
